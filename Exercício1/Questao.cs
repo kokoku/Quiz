@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Exercício1
+namespace AEC
 {
-    class Questao
+    public class Questao
     {
         public int Codigo { get; set; }
         public string Enunciado { get; set; }
@@ -19,13 +19,14 @@ namespace Exercício1
             string Alter = null;
             foreach (string t in Alternativas)
             {
-                Alter = Alter + t+"\n";
+                Alter = Alter + t + "\n";
             }
-            return "Codigo: " + Codigo +"\n"+
-            "Enunciado: " + Enunciado +"\n"+
-            "Alternativas: " + Alter +"\n"+
-            "Resposta: " + Resposta +"\n"+
+            return "Codigo: " + Codigo + "\n" +
+            "Enunciado: " + Enunciado + "\n" +
+            "Alternativas: " + Alter + "\n" +
+            "Resposta: " + Resposta + "\n" +
             "Dificuldade: " + Dificuldade + "\n";
         }
+
     }
 }

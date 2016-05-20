@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Exercício1
+namespace AEC
 {
     class Arquivo
     {
-        public static void Leitura(List<Questao> lista){
+        public static void Leitura_Questao(List<Questao> lista)
+        {
             StreamReader sr;
             string linha;
 
@@ -35,13 +36,14 @@ namespace Exercício1
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    //Console.WriteLine(ex.Message);
                 }
             }
             else
                 Console.WriteLine("Arquivo não localizado");
         }
-        public static void Gravacao(List<Questao> lista)
+
+        public static void Gravacao_Questao(List<Questao> lista)
         {
             StreamWriter sw;
             try
@@ -57,9 +59,65 @@ namespace Exercício1
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                //Console.WriteLine(ex.Message);
                 throw;
             }
         }
+
+        public static void Leitura_Jogador(List<Jogador> lista)
+        {
+            StreamReader sr;
+            string linha;
+
+            if (File.Exists("Usuarios.txt"))
+            {
+                try
+                {
+                    using (sr = new StreamReader("Usuarios.txt"))
+                    {
+                        while ((linha = sr.ReadLine()) != null)
+                        {
+                            Jogador x = new Jogador();
+                            string[] aux = linha.Split('|');
+                            x.Nome = aux[0];
+                            x.Pontos = int.Parse(aux[1]);
+                            x.PerguntasRespondidas.Add(int.Parse(aux[2]));
+                            lista.Add(x);
+                        }
+                        sr.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Console.WriteLine(ex.Message);
+                }
+            }
+            else
+                Console.WriteLine("Arquivo não localizado");
+        }
+
+        public static void Gravacao_Usuario(List<Jogador> lista_jogadores)
+        {
+            StreamWriter sw;
+            try
+            {
+                using (sw = new StreamWriter("Usuarios.txt",true))
+                {
+                    foreach (Jogador item in lista_jogadores)
+                    {
+                        sw.WriteLine(item.Nome + "|" + item.Pontos + "|" + item.PerguntasRespondidas);
+                    }
+                    sw.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+
+
     }
 }
