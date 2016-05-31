@@ -9,16 +9,17 @@ namespace AEC
 {
     class Arquivo
     {
+        //LENDO ARQUIVO DE QUESTÕES
         public static void Leitura_Questao(List<Questao> lista)
         {
             StreamReader sr;
             string linha;
 
-            if (File.Exists("arquivo.txt"))
+            if (File.Exists("Arquivo.txt"))
             {
                 try
                 {
-                    using (sr = new StreamReader("arquivo.txt"))
+                    using (sr = new StreamReader("Arquivo.txt"))
                     {
                         while ((linha = sr.ReadLine()) != null)
                         {
@@ -26,9 +27,14 @@ namespace AEC
                             string[] aux = linha.Split('|');
                             x.Codigo = int.Parse(aux[0]);
                             x.Enunciado = aux[1];
+                            x.Resposta = char.Parse(aux[6]);
+                            x.Dificuldade = int.Parse(aux[7]);
+                            x.Alternativas = new List<string>();
                             x.Alternativas.Add(aux[2]);
-                            x.Resposta = char.Parse(aux[3]);
-                            x.Dificuldade = int.Parse(aux[4]);
+                            x.Alternativas.Add(aux[3]);
+                            x.Alternativas.Add(aux[4]);
+                            x.Alternativas.Add(aux[5]);
+
                             lista.Add(x);
                         }
                         sr.Close();
@@ -43,27 +49,7 @@ namespace AEC
                 Console.WriteLine("Arquivo não localizado");
         }
 
-        public static void Gravacao_Questao(List<Questao> lista)
-        {
-            StreamWriter sw;
-            try
-            {
-                using (sw = new StreamWriter("arquivo.txt"))
-                {
-                    foreach (Questao item in lista)
-                    {
-                        sw.WriteLine(item.Codigo + "|" + item.Enunciado + "|" + item.Alternativas + "|" + item.Resposta + "|" + item.Dificuldade);
-                    }
-                    sw.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                //Console.WriteLine(ex.Message);
-                throw;
-            }
-        }
-
+        //LENDO ARQUIVO DE JOGADORES
         public static void Leitura_Jogador(List<Jogador> lista)
         {
             StreamReader sr;
@@ -96,24 +82,22 @@ namespace AEC
                 Console.WriteLine("Arquivo não localizado");
         }
 
+        //GRAVANDO NO ARQUIVO DE JOGADORES
         public static void Gravacao_Usuario(List<Jogador> lista_jogadores)
         {
             StreamWriter sw;
-            try
+
+            using (sw = new StreamWriter("Usuarios.txt"))
             {
-                using (sw = new StreamWriter("Usuarios.txt",true))
+                foreach (Jogador item in lista_jogadores)
                 {
-                    foreach (Jogador item in lista_jogadores)
+                    sw.Write(item.Nome + "|" + item.Pontos + "|");
+                    for (int i = 0; i < item.PerguntasRespondidas.Count; i++)
                     {
-                        sw.WriteLine(item.Nome + "|" + item.Pontos + "|" + item.PerguntasRespondidas);
+                        sw.Write(item.PerguntasRespondidas[i] + "|");
                     }
-                    sw.Close();
                 }
-            }
-            catch (Exception ex)
-            {
-                //Console.WriteLine(ex.Message);
-                throw;
+                sw.Close();
             }
         }
 

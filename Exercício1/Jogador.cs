@@ -12,12 +12,5 @@ namespace AEC
         public int Pontos { get; set; }
         public List<int> PerguntasRespondidas { get; set; }
 
-        public override string ToString()
-        {
-            return "Jogador: " + Nome + "\n" +
-                "Pontos: " + Pontos + "\n" +
-                "Perguntas respondidas: " + PerguntasRespondidas;
-        }
-
     }
 }
